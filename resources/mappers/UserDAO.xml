@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.nsergey.dao.UserDAO">
+  <resultMap id="userMapping" type="com.nsergey.model.UserModel">
+    <id column="AUDITOR_ID" property="id" />
+    <result column="AUDITOR_AGENCY_TYPE_ID" property="agencyType" />
+    <result column="AUDITOR_AGENCY_NAME" property="agencyName" />
+    <result column="AUDITOR_UNIT_NAME" property="unitName" />
+    <result column="AUDITOR_POSITION" property="position" />
+    <result column="AUDITOR_LASTNAME" property="lastName" />
+    <result column="AUDITOR_FIRSTNAME" property="firstName" />
+    <result column="AUDITOR_MIDDLENAME" property="middleName" />
+    <result column="AUDITOR_LOGIN" property="login" />
+    <result column="AUDITOR_DELETED" property="disabled" />
+  </resultMap>
+
+    <insert id="insert" parameterType="com.nsergey.model.UserModel">
+        INSERT INTO ASV_AUDITOR
+          (AUDITOR_AGENCY_TYPE_ID,
+           AUDITOR_AGENCY_NAME,
+           AUDITOR_UNIT_NAME,
+           AUDITOR_POSITION,
+           AUDITOR_LASTNAME,
+           AUDITOR_FIRSTNAME,
+           AUDITOR_MIDDLENAME,
+           AUDITOR_LOGIN,
+           AUDITOR_DELETED)
+        VALUES (
+            #{user.agencyType},
+            #{user.agencyName},
+            #{user.unitName},
+            #{user.position},
+            #{user.lastName},
+            #{user.firstName},
+            #{user.middleName},
+            #{user.login},
+            #{user.disabled}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE ASV_AUDITOR
+        SET
+            AUDITOR_AGENCY_TYPE_ID = #{user.agencyType},
+            AUDITOR_AGENCY_NAME = #{user.agencyName},
+            AUDITOR_UNIT_NAME = #{user.unitName},
+            AUDITOR_POSITION = #{user.position},
+            AUDITOR_LASTNAME = #{user.lastName},
+            AUDITOR_FIRSTNAME = #{user.firstName},
+            AUDITOR_MIDDLENAME = #{user.middleName},
+            AUDITOR_LOGIN = #{user.login},
+            AUDITOR_DELETED = #{user.disabled}
+        where AUDITOR_ID = #{userId}
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM
+            ASV_AUDITOR
+        WHERE
+            AUDITOR_ID = #{userId}
+    </delete>
+
+    <select id="getById" parameterType="long" resultMap="userMapping">
+      select
+          AUDITOR_ID,
+          AUDITOR_AGENCY_TYPE_ID,
+          AUDITOR_AGENCY_NAME,
+          AUDITOR_UNIT_NAME,
+          AUDITOR_POSITION,
+          AUDITOR_LASTNAME,
+          AUDITOR_FIRSTNAME,
+          AUDITOR_MIDDLENAME,
+          AUDITOR_LOGIN,
+          AUDITOR_DELETED
+      from ASV_AUDITOR
+      where AUDITOR_ID = #{userId}
+  </select>
+
+    <select id="getAll" resultMap="userMapping" resultType="arraylist">
+        SELECT
+            AUDITOR_ID,
+            AUDITOR_AGENCY_TYPE_ID,
+            AUDITOR_AGENCY_NAME,
+            AUDITOR_UNIT_NAME,
+            AUDITOR_POSITION,
+            AUDITOR_LASTNAME,
+            AUDITOR_FIRSTNAME,
+            AUDITOR_MIDDLENAME,
+            AUDITOR_LOGIN,
+            AUDITOR_DELETED
+        FROM ASV_AUDITOR
+    </select>
+
+    <select id="getByLogin" parameterType="string" resultMap="userMapping">
+        select
+            AUDITOR_ID,
+            AUDITOR_AGENCY_TYPE_ID,
+            AUDITOR_AGENCY_NAME,
+            AUDITOR_UNIT_NAME,
+            AUDITOR_POSITION,
+            AUDITOR_LASTNAME,
+            AUDITOR_FIRSTNAME,
+            AUDITOR_MIDDLENAME,
+            AUDITOR_LOGIN,
+            AUDITOR_DELETED
+        from ASV_AUDITOR
+        where AUDITOR_LOGIN = #{login}
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer">
+        select
+            count(AUDITOR_ID)
+        from
+            ASV_AUDITOR
+    </select>
+
+</mapper>
