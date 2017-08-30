@@ -37,6 +37,7 @@
 
     <mappers>
         <mapper resource="mappers/UserXmlDAO.xml"/>
+        <mapper class="com.nsergey.dao.UserAnnotatedDao"/>
     </mappers>
 </configuration>
 

@@ -1,5 +1,6 @@
 package com.nsergey;
 
+import com.nsergey.dao.UserAnnotatedDao;
 import com.nsergey.dao.UserXmlDao;
 import com.nsergey.model.UserModel;
 import org.apache.ibatis.session.SqlSession;
@@ -15,7 +16,8 @@ public class Main {
         SqlSession session = sessionFactory.openSession();
         try {
             // Получаем маппер
-            UserXmlDao mapper = session.getMapper(UserXmlDao.class);
+            //UserXmlDao mapper = session.getMapper(UserXmlDao.class);
+            UserAnnotatedDao mapper = session.getMapper(UserAnnotatedDao.class);
 
             // Сколько всего пользователей
             int count = mapper.getCount();
