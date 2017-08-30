@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface UserAnnotatedDao  {
 
+    /**
+     * Получить пользователя по идентификатору.
+     *
+     * @param userId Идентификатор пользователя.
+     * @return Модель данных пользователя.
+     */
     @Results(value = {
             @Result(property = "id",            column = "AUDITOR_ID"),
             @Result(property = "agencyType",    column = "AUDITOR_AGENCY_TYPE_ID"),
@@ -34,6 +40,11 @@ public interface UserAnnotatedDao  {
             " where AUDITOR_ID = #{userId}")
     UserModel getById(@Param("userId") Long userId);
 
+    /**
+     * Получить список всех пользователей
+     *
+     * @return Список пользователей
+     */
     @Select("select " +
             " AUDITOR_ID, " +
             " AUDITOR_AGENCY_TYPE_ID, " +
@@ -49,6 +60,10 @@ public interface UserAnnotatedDao  {
     @ResultMap("getById-Long") // it'a magic string: method "getById" + parameter type "Long" => "getById-Long" (!!!)
     List<UserModel> getAll();
 
+    /**
+     * Добавляет нового пользователя
+     * @param userModel Модель данных пользователя
+     */
     @Insert("INSERT INTO ASV_AUDITOR (" +
             "   AUDITOR_AGENCY_TYPE_ID, " +
             "   AUDITOR_AGENCY_NAME, " +
@@ -73,6 +88,11 @@ public interface UserAnnotatedDao  {
             ")")
     void insert(@Param("user") UserModel userModel);
 
+    /**
+     * Обновляет данные пользователя
+     * @param id Идентификатор пользователя
+     * @param userModel Модель данных пользователя
+     */
     @Update("UPDATE ASV_AUDITOR " +
             " SET " +
             "     AUDITOR_AGENCY_TYPE_ID = #{user.agencyType}, " +
@@ -87,9 +107,19 @@ public interface UserAnnotatedDao  {
             " where AUDITOR_ID = #{userId}")
     void update(@Param("userId") Long id, @Param("user") UserModel userModel);
 
+    /**
+     * Удаляет пользователя по идентификатору
+     *
+     * @param id Идентификатор пользователя
+     */
     @Delete("DELETE FROM ASV_AUDITOR WHERE AUDITOR_ID = #{userId}")
     void deleteById(@Param("userId") Long id);
 
+    /**
+     * Получить пользователя по логину
+     * @param login Логин пользователя
+     * @return Модель данных пользователя
+     */
     @Select("select " +
             " AUDITOR_ID, " +
             " AUDITOR_AGENCY_TYPE_ID, " +
@@ -106,6 +136,10 @@ public interface UserAnnotatedDao  {
     @ResultMap("getById-Long")
     UserModel getByLogin(@Param("login") String login);
 
+    /**
+     * Количество пользователей в БД
+     * @return Количество пользователей
+     */
     @Select("select count(*) from ASV_AUDITOR")
     int getCount();
 
