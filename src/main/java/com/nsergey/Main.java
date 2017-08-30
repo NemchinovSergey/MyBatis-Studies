@@ -1,7 +1,6 @@
 package com.nsergey;
 
-
-import com.nsergey.dao.UserDAO;
+import com.nsergey.dao.UserXmlDao;
 import com.nsergey.model.UserModel;
 import org.apache.ibatis.session.SqlSession;
 
@@ -16,7 +15,7 @@ public class Main {
         SqlSession session = sessionFactory.openSession();
         try {
             // Получаем маппер
-            UserDAO mapper = session.getMapper(UserDAO.class);
+            UserXmlDao mapper = session.getMapper(UserXmlDao.class);
 
             // Сколько всего пользователей
             int count = mapper.getCount();

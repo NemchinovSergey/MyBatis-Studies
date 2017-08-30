@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface UserDAO {
+public interface UserXmlDao {
     /**
      * Получить пользователя по идентификатору.
      *
@@ -55,6 +55,4 @@ public interface UserDAO {
      * @return Количество пользователей
      */
     int getCount();
-
-
 }
