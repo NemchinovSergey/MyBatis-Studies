@@ -15,25 +15,25 @@ public class Main {
 
         SqlSession session = sessionFactory.openSession();
         try {
-            // Получаем маппер
+            // РџРѕР»СѓС‡Р°РµРј РјР°РїРїРµСЂ
             //UserXmlDao mapper = session.getMapper(UserXmlDao.class);
             UserAnnotatedDao mapper = session.getMapper(UserAnnotatedDao.class);
 
-            // Сколько всего пользователей
+            // РЎРєРѕР»СЊРєРѕ РІСЃРµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
             int count = mapper.getCount();
             System.out.println("Users count: " + count);
 
-            // Получаем отдельный объект
+            // РџРѕР»СѓС‡Р°РµРј РѕС‚РґРµР»СЊРЅС‹Р№ РѕР±СЉРµРєС‚
             UserModel userModel = mapper.getById(61L);
             System.out.println(userModel);
 
-            System.out.println("Получаем список проверяющих");
+            System.out.println("РџРѕР»СѓС‡Р°РµРј СЃРїРёСЃРѕРє РїСЂРѕРІРµСЂСЏСЋС‰РёС…");
             List<UserModel> users = mapper.getAll();
             for (UserModel u : users) {
                 System.out.println(u);
             }
 
-            // Ищем пользователя по логину
+            // РС‰РµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РїРѕ Р»РѕРіРёРЅСѓ
             UserModel user = mapper.getByLogin("SuperPuperLogin");
             if (user != null) {
                 System.out.println("User with SuperPuperLogin login is present! Delete it...");
@@ -41,13 +41,13 @@ public class Main {
                 session.commit();
             }
             else {
-                // Добавляем новый объект
+                // Р”РѕР±Р°РІР»СЏРµРј РЅРѕРІС‹Р№ РѕР±СЉРµРєС‚
                 System.out.println("User with SuperPuperLogin login is absent! Add it...");
                 user = new UserModel();
                 user.setAgencyType(1L);
-                user.setAgencyName("Отделение 513");
-                user.setUnitName("Название подразделения");
-                user.setPosition("Должность");
+                user.setAgencyName("РћС‚РґРµР»РµРЅРёРµ 513");
+                user.setUnitName("РќР°Р·РІР°РЅРёРµ РїРѕРґСЂР°Р·РґРµР»РµРЅРёСЏ");
+                user.setPosition("Р”РѕР»Р¶РЅРѕСЃС‚СЊ");
                 user.setLastName("LastName");
                 user.setFirstName("FirstName");
                 user.setMiddleName("MiddleName");
@@ -57,12 +57,12 @@ public class Main {
                 mapper.insert(user);
                 session.commit();
 
-                // А теперь сразу же обновим данные
+                // Рђ С‚РµРїРµСЂСЊ СЃСЂР°Р·Сѓ Р¶Рµ РѕР±РЅРѕРІРёРј РґР°РЅРЅС‹Рµ
                 user = mapper.getByLogin("SuperPuperLogin");
                 if (user != null) {
-                    user.setLastName("Фамилия");
-                    user.setFirstName("Имя");
-                    user.setMiddleName("Отчество");
+                    user.setLastName("Р¤Р°РјРёР»РёСЏ");
+                    user.setFirstName("РРјСЏ");
+                    user.setMiddleName("РћС‚С‡РµСЃС‚РІРѕ");
 
                     mapper.update(user.getId(), user);
                     session.commit();
