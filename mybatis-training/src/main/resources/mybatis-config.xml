@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="config.properties"/> <!--ссылка на файл со свойствами(ссылка на СУБД, логин, пароль и тп.)-->
+    <settings>
+        <!--
+        В данном блоке можно настроить много параметров.
+        Полный список параметров http://mybatis.github.io/mybatis-3/configuration.html#settings
+
+        Valid values are
+            SLF4J, LOG4J, LOG4J2, JDK_LOGGING, COMMONS_LOGGING, STDOUT_LOGGING, NO_LOGGING
+        or a full qualified class name that implements org.apache.ibatis.logging.Log and gets an string as a constructor parameter.
+        http://www.mybatis.org/mybatis-3/logging.html
+        -->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <environments default="development">
+        <environment id="production">
+            <transactionManager type="MANAGED">
+                <property name="commitRequired" value="false"/>
+            </transactionManager>
+            <dataSource type="JNDI">
+                <property name="data_source" value="${jndi.datasource}"/>
+            </dataSource>
+        </environment>
+
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mappers/UserXmlDAO.xml"/>
+        <mapper class="com.nsergey.dao.UserAnnotatedDao"/>
+    </mappers>
+</configuration>
+

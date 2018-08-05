@@ -1,0 +1,8 @@
+# ignore directories
+out/
+target/
+lib/
+.idea/
+
+# ignore files
+*.iml
